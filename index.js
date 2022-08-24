@@ -107,6 +107,7 @@ function watchFallback (directory, onchange) {
     fs.lstat(dir, function (err, st) {
       if (err || !st.isDirectory()) return cb()
       if (watching[dir]) return cb()
+      if (dir.includes('/node_modules') || dir.includes('/.git') || dir.includes('/.github')) return cb()
       if (loaded) emit(dir)
 
       var w = fs.watch(dir, function (change, filename) {
